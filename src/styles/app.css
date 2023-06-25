@@ -1,0 +1,13 @@
+.mainContent {
+    position: absolute;
+    left: 200px;
+    right: 0;
+    height: 100%;
+    padding: 0;
+    background-color: #F2F2F2;
+    transition: all 0.5s;
+}
+
+.hidden-mainContent {
+    left: 0;
+}
