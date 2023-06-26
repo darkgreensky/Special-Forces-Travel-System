@@ -1,86 +1,40 @@
 import React, { Component } from 'react';
-import fold from '../images/function.png';
 import ACTIONS from "../redux/actions";
 import {connect} from "react-redux";
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
-
-const foldStyle = {
-    position: 'relative',
-    width: '30px',
-    height: '30px',
-    backgroundColor: 'white',
-    left: '20px',
-    top: 'calc(50% - 15px)',
-    cursor: 'pointer',
-    transition: 'transform 0.3s',
-}
 
 class NavBar extends Component {
-    state = {
-        isHover: false,
-    }
-    handleMouseEnter = () => {
-        this.setState({isHover: true});
-        // console.log(this.state.isHover);
+    // 登出逻辑
+    handleLogout = () => {
+        localStorage.setItem('isLoggedIn', 'false');
+        this.props.logout();
     };
-    handleMouseLeave = () => {
-        this.setState({isHover: false});
-    };
-
-    handleOnClick = () => {
-        $.ajax({
-            url: "https://app165.acapp.acwing.com.cn/calculator/logout/",
-            type: "get",
-            success: resp => {
-                console.log(resp.result);
-                if (resp.result === "success") {
-                    window.location.href="/login";
-                }
-            }
-        });
-    }
 
     render_user = () => {
+        console.log("navbar", this.props);
         if (this.props.is_login === true) {
             return (
                 <React.Fragment>
-                    <Link style={{
-                        width: "50px",
-                        height: "50px",
-                        position: "absolute",
-                        top: "0px",
-                        right: "90px",
-                        lineHeight: "50px",
-                        textAlign: "center",
-                        textDecoration: "none",
-                    }} to="/login">{this.props.username}</Link>
-                    <Link style={{
-                        width: "50px",
-                        height: "50px",
-                        position: "absolute",
-                        top: "0px",
-                        right: "30px",
-                        lineHeight: "50px",
-                        textAlign: "center",
-                        textDecoration: "none",
-                    }} onClick={this.handleOnClick}>退出</Link>
+                    <li className="nav-item">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <a className="nav-link" style={{cursor: "pointer"}}>{this.props.username}</a>
+                    </li>
+                    <li className="nav-item">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <a onClick={this.handleLogout} className="nav-link" style={{cursor: "pointer"}}>退出</a>
+                    </li>
                 </React.Fragment>
             )
         }
         else {
             return (
                 <React.Fragment>
-                    <Link style={{
-                        width: "50px",
-                        height: "50px",
-                        position: "absolute",
-                        top: "0px",
-                        right: "30px",
-                        lineHeight: "50px",
-                        textAlign: "center",
-                        textDecoration: "none",
-                    }} to="/login">登录</Link>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">登录</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/register">注册</Link>
+                    </li>
                 </React.Fragment>
             )
         }
@@ -89,26 +43,64 @@ class NavBar extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{height: '50px', backgroundColor: '#fff', left: '0px'}}>
-                    <img src={fold} onClick={() => this.props.switch_sidebar()} alt="" style={{...foldStyle,
-                            transform: `${this.state.isHover ? "scale(1.1)" : ""}`}}
-                         // style={{transform: `${isHover ? "scale(1.2)" : ""}`}}
-                         onMouseEnter={this.handleMouseEnter}
-                         onMouseLeave={this.handleMouseLeave}/>
-                    {this.render_user()}
-                </div>
+                <nav className="navbar navbar-expand-lg bg-body-tertiary">
+                    <div className="container-fluid" style={{marginRight: "20px"}}>
+                        <a className="navbar-brand" href="/">特种兵旅游系统</a>
+                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"/>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li className="nav-item dropdown">
+                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                    <a className="nav-link dropdown-toggle" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        出行规划
+                                    </a>
+                                    <ul className="dropdown-menu">
+                                        <li><Link className="dropdown-item" to="/pathplan/drive">驾车规划</Link></li>
+                                        <li><Link className="dropdown-item" to="/pathplan/bus">公交规划</Link></li>
+                                    </ul>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/service">购票服务</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/blog">路线分享</Link>
+                                </li>
+                            </ul>
+                            <ul className="navbar-nav">
+                                {this.render_user()}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </React.Fragment>
         );
     }
 }
 
+const mapStateToProps = (state, props) => {
+    console.log("navbar-mapstateto", state);
+    return {
+        is_login: state.is_login,
+        username: state.username,
+    }
+}
+
 const mapDispatchToProps = {
     switch_sidebar: () => {
-        // console.log("click");
         return {
             type: ACTIONS.SWITCH_SIDEBAR
+        }
+    },
+    logout: () => {
+        return {
+            type: ACTIONS.LOGOUT
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

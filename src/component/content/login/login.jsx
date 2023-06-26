@@ -3,6 +3,9 @@ import backgroundImage from '../../../images/nanjing_yangtze_river_bridge.jpg';
 import '../../../styles/login.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
+import { URL } from '../../../constants';
+import ACTIONS from '../../../redux/actions';
+import { connect } from 'react-redux';
 
 class Login extends Component {
     constructor(props) {
@@ -11,6 +14,7 @@ class Login extends Component {
             error_message: "",
             username: "",
             password: "",
+            is_login: false,
         };
     }
 
@@ -20,11 +24,12 @@ class Login extends Component {
             this.setState({error_message: "用户名不能为空"});
         }
         else if (this.state.password === "") {
+            this.handleLogin();
             this.setState({error_message: "密码不能为空"});
         }
         else {
             $.ajax({
-                url: "http://192.168.255.236:8080/user/login",
+                url: `${URL}/user/login`,
                 type: "get",
                 data: {
                     username: this.state.username,
@@ -32,15 +37,28 @@ class Login extends Component {
                 },
                 dataType: "json",
                 success: resp => {
-                    if (resp.result === "success")
-                        window.location.href="/";
-                    else
+                    if (resp.result === "success") {
+                        this.handleLogin();
+                        window.location.href = "/";
+                    }
+                    else {
                         console.log(resp);
                         this.setState({error_message: "用户名或密码错误"});
+                    }
                 }
             })
         }
     }
+
+    // 登录逻辑
+    handleLogin = () => {
+        this.setState({
+            is_login: true
+        });
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', this.state.username);
+        this.props.login_token(this.state);
+    };
 
     render() {
         return (
@@ -67,5 +85,15 @@ class Login extends Component {
         );
     }
 }
+const mapDispatchProps = {
+    login_token: state => {
+        console.log("login");
+        return {
+            type: ACTIONS.LOGIN_TOKEN,
+            is_login: state.is_login,
+            username: state.username,
+        }
+    }
+}
 
-export default Login;
+export default connect(null, mapDispatchProps)(Login);

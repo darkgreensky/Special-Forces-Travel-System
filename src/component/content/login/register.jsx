@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import backgroundImage from '../../../images/nanjing_yangtze_river_bridge_day.png';
 import '../../../styles/register.css';
 import $ from 'jquery';
+import { URL } from '../../../constants';
 
 class Register extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class Register extends Component {
         }
         else {
             $.ajax({
-                url: "http://192.168.255.236:8080/user/register",
+                url: `${URL}/user/register`,
                 type: "get",
                 data: {
                     username: this.state.username,
@@ -39,7 +40,7 @@ class Register extends Component {
                 dataType: "json",
                 success: resp => {
                     if (resp.result === "success")
-                        window.location.href="/calculator";
+                        window.location.href="/";
                     else
                         console.log(resp);
                         this.setState({error_message: resp.result});

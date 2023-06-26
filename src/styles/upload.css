@@ -1,0 +1,27 @@
+.textarea-container {
+    display: flex;
+}
+
+.line-number-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0 0 10px;
+    background-color: #f6f0e5;
+}
+
+.line-number-container div {
+    line-height: 20px;
+    padding: 0 5px;
+}
+
+.editable-textarea {
+    white-space: pre-wrap;
+    line-height: 20px;
+    width: 100%;
+    /*height: 200px;*/
+    background-color: #f6f0e5;
+    padding: 10px;
+    outline: none;
+    min-height: 200px;
+    overflow: hidden;
+}

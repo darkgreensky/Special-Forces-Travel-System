@@ -38,3 +38,9 @@
     color: white;
     text-decoration: none;
 }
+
+.amap-icon img,
+.amap-marker-content img{
+    width: 25px;
+    height: 34px;
+}
