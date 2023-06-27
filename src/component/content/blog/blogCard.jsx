@@ -19,7 +19,7 @@ class BlogCard extends Component {
                 }}>
                     <div className="row">
                         <div className="col-6 blog-card-line">
-                            {this.props.card.title}
+                            <Link to={`./content/${this.props.card.id}`} className={"blog-card-line-link"}>{this.props.card.title}</Link>
                         </div>
                         <div className="col-2 blog-card-line">
                             {this.props.card.author}

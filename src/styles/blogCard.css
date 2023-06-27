@@ -2,3 +2,8 @@
     height: 50px;
     line-height: 50px;
 }
+
+.blog-card-line-link {
+    text-decoration: blink;
+    color: #0352a9;
+}

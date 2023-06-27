@@ -12,17 +12,19 @@ import Login from './content/login/login';
 import Register from './content/login/register';
 import Blog from './content/blog/blog';
 import Upload from "./content/blog/upload";
-import BlogContent from './content/blog/blogContent'
+import BlogContent from './content/blog/blogContent';
+import Sign from './content/map/sign';
+import AllPosition from './content/pages/allPosition';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import ACTIONS from "../redux/actions";
+import Measure from "./content/map/measure";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             is_login: false,
-            username: "dark213",
+            username: "login_error",
         };
         const storedLoginStatus = localStorage.getItem('isLoggedIn');
         if (storedLoginStatus === 'true') {
@@ -33,33 +35,8 @@ class App extends Component {
         }
     }
 
-    componentDidMount() {
-        console.log("app did", this.state);
-
-        return;
-        // eslint-disable-next-line no-unreachable
-        $.ajax({
-            url: "https://app165.acapp.acwing.com.cn/calculator/get_status/",
-            type: "get",
-            success: resp => {
-                if (resp.result === "login") {
-                    this.setState({
-                        is_login: true,
-                        username: resp.username,
-                    });
-                }
-                else {
-                    this.setState({
-                        is_login: false,
-                        username: "",
-                    });
-                };
-            }
-        });
-    }
-
     render() {
-        // console.log("app", this.state);
+        // console.log("app", this.props);
         return (
             <React.Fragment>
                 {/*<SideBar/>*/}
@@ -74,18 +51,18 @@ class App extends Component {
                                 <Route path='/' element={<Home />} />
                                 <Route path='/pathplan/drive' element={<PathPlan />} />
                                 <Route path='/pathplan/bus' element={<BusPlan />} />
+                                <Route path='/map/sign' element={<Sign />} />
+                                <Route path='/map/measure' element={<Measure />} />
                                 <Route path='/service' element={<Service />} />
                                 <Route path='/service/:pageNumber' element={<TicketInfo />} />
                                 <Route path='/blog' element={<Blog /> } />
-                                <Route path='/blog/upload' element={this.props.is_login ? <Upload /> : <Navigate replace to="/login"/>} />
-                                {/*<Route path='/blog/upload' element={<Upload /> } />*/}
+                                <Route path='/blog/upload' element={this.props.is_login ? <Upload username={this.state.username} /> : <Navigate replace to="/login"/>} />
                                 <Route path='/blog/content/:pageNumber' element={<BlogContent /> } />
                                 <Route path='/login' element={<Login />} />
                                 <Route path='/register' element={<Register />} />
-                                {/*<Route path='/calculator/login' element={this.state.is_login ? <Navigate replace to="/calculator/home"/> : <Login />} />*/}
-                                {/*<Route path='/calculator/register' element={this.state.is_login ? <Navigate replace to="/calculator/home"/> : <Register />} /> *!/*/}
                                 <Route path='/404' element={<NotFound />} />
                                 <Route path='/*' element={<Navigate replace to="/404" />} />
+                                <Route path='/topic' element={<AllPosition />} />
                         </Routes>
                         </div>
                     </div>

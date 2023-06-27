@@ -1,18 +1,17 @@
 import React, { useState, useRef } from 'react';
 import '../../../styles/upload.css'
 import ReactMarkdown from 'react-markdown';
-
 import remarkGfm from 'remark-gfm'
-// 解析标签，支持html语法
 import rehypeRaw from 'rehype-raw'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { URL } from '../../../constants';
 
-
-const Upload = () => {
+const Upload = (props) => {
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [titleValue, setTitleValue] = useState('');
+    // const [imageUrl, setImageUrl] = useState('');
     const textareaRef = useRef(null);
     const fileInputRef = useRef(null);
 
@@ -68,16 +67,26 @@ const Upload = () => {
         textarea.focus();
     };
 
-    const addImage = () => {
+    const addImage = (url) => {
         const textarea = textareaRef.current;
         const startPos = textarea.selectionStart;
         const endPos = textarea.selectionEnd;
         const currentValue = textarea.value;
 
-        const newValue = `${currentValue.substring(0, startPos)}![${currentValue.substring(
-            startPos,
-            endPos
-        )}](https://)${currentValue.substring(endPos)}`;
+        let newValue
+        if (url === '') {
+            newValue = `${currentValue.substring(0, startPos)}![${currentValue.substring(
+                startPos,
+                endPos
+            )}](https://)${currentValue.substring(endPos)}`;
+        }
+        else {
+            newValue = `${currentValue.substring(0, startPos)}![${currentValue.substring(
+                startPos,
+                endPos
+            )}](${url})${currentValue.substring(endPos)}`;
+
+        }
 
         setInputValue(newValue);
         // 设置光标位置
@@ -88,32 +97,37 @@ const Upload = () => {
 
     const uploadImage = () => {
         fileInputRef.current.click();
-        const textarea = textareaRef.current;
-        const startPos = textarea.selectionStart;
-        const endPos = textarea.selectionEnd;
-        const currentValue = textarea.value;
-
-        const newValue = `${currentValue.substring(0, startPos)}![${currentValue.substring(
-            startPos,
-            endPos
-        )}](https://)${currentValue.substring(endPos)}`;
-
-        setInputValue(newValue);
-        // 设置光标位置
-        textarea.selectionStart = startPos + 2;
-        textarea.selectionEnd = endPos + 2;
-        textarea.focus();
     };
 
     const handleFileInputChange = (event) => {
-        const file = event.target.files[0];
+        let file = event.target.files[0];
         // 处理选中的文件
-        console.log(file);
+        let data = new FormData();
+        data.append('file', file);
+        console.log(data.get('file'));
+        // 向服务器发送Ajax请求，上传文件
+        fetch(`${URL}/image`, {
+            method: 'POST',
+            body: data,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 处理上传成功后的响应
+                console.log('上传成功:', data);
+                // setImageUrl(data.image_url);
+                addImage(data.image_url);
+            })
+            .catch(error => {
+                // 处理上传失败的情况
+                console.error('上传失败:', error);
+            });
+        fileInputRef.current.value = null;
     };
 
     const submit = () => {
         console.log(titleValue);
         console.log(inputValue);
+        console.log(props.username);
     }
 
     return (
@@ -138,7 +152,7 @@ const Upload = () => {
                     <button type="button" className="btn btn-light" onClick={addImage} title={"插入图片链接"}><i className="bi bi-image"></i></button>
                     <button type="button" className="btn btn-light" onClick={uploadImage} title={"上传图片"}><i className="bi bi-cloud-arrow-up" />
                     </button>
-                    <input type="file" accept="image/*" placeholder="" ref={fileInputRef} style={{display: "none"}} onChange={handleFileInputChange}/>
+                    <input type="file" name={"image"} placeholder="" ref={fileInputRef} style={{display: "none"}} onChange={handleFileInputChange}/>
                 </div>
             </div>
             {isPreviewMode ? (

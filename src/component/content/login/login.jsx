@@ -14,7 +14,7 @@ class Login extends Component {
             error_message: "",
             username: "",
             password: "",
-            is_login: false,
+            is_login: true,
         };
     }
 
@@ -24,7 +24,7 @@ class Login extends Component {
             this.setState({error_message: "用户名不能为空"});
         }
         else if (this.state.password === "") {
-            this.handleLogin();
+            // this.handleLogin();
             this.setState({error_message: "密码不能为空"});
         }
         else {
@@ -38,11 +38,12 @@ class Login extends Component {
                 dataType: "json",
                 success: resp => {
                     if (resp.result === "success") {
+                        console.log("login success");
                         this.handleLogin();
                         window.location.href = "/";
                     }
                     else {
-                        console.log(resp);
+                        console.log(resp.result);
                         this.setState({error_message: "用户名或密码错误"});
                     }
                 }

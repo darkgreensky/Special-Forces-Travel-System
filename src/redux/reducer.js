@@ -2,7 +2,7 @@ import ACTIONS from "./actions";
 
 const reducer = (state = {
     isShow: 1, // 初始状态下是否展示侧边栏
-    is_login: false,
+    is_login: true,
     username: "",
 }, action) => {
     switch (action.type) {
@@ -11,7 +11,7 @@ const reducer = (state = {
                 isShow: state.isShow ^ 1
             }
         case ACTIONS.LOGIN_TOKEN:
-            console.log("action-login");
+            // console.log("action-login");
             return {
                 is_login: true,
                 username: action.username,

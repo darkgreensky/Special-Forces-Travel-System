@@ -11,7 +11,7 @@ class NavBar extends Component {
     };
 
     render_user = () => {
-        console.log("navbar", this.props);
+        // console.log("navbar", this.props);
         if (this.props.is_login === true) {
             return (
                 <React.Fragment>
@@ -45,7 +45,7 @@ class NavBar extends Component {
             <React.Fragment>
                 <nav className="navbar navbar-expand-lg bg-body-tertiary">
                     <div className="container-fluid" style={{marginRight: "20px"}}>
-                        <a className="navbar-brand" href="/">特种兵旅游系统</a>
+                        <a className="navbar-brand" href="/">特种兵旅游系统-南京</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,17 @@ class NavBar extends Component {
                                     <ul className="dropdown-menu">
                                         <li><Link className="dropdown-item" to="/pathplan/drive">驾车规划</Link></li>
                                         <li><Link className="dropdown-item" to="/pathplan/bus">公交规划</Link></li>
+                                    </ul>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                    <a className="nav-link dropdown-toggle" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        地图显示
+                                    </a>
+                                    <ul className="dropdown-menu">
+                                        <li><Link className="dropdown-item" to="/map/sign">地图标记</Link></li>
+                                        <li><Link className="dropdown-item" to="/map/measure">地图量算</Link></li>
                                     </ul>
                                 </li>
                                 <li className="nav-item">
@@ -82,8 +93,7 @@ class NavBar extends Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
-    console.log("navbar-mapstateto", state);
+const mapStateToProps = (state) => {
     return {
         is_login: state.is_login,
         username: state.username,
@@ -91,11 +101,11 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = {
-    switch_sidebar: () => {
-        return {
-            type: ACTIONS.SWITCH_SIDEBAR
-        }
-    },
+    // switch_sidebar: () => {
+    //     return {
+    //         type: ACTIONS.SWITCH_SIDEBAR
+    //     }
+    // },
     logout: () => {
         return {
             type: ACTIONS.LOGOUT

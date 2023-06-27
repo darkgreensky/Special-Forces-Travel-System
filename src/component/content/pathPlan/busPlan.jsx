@@ -42,7 +42,7 @@ class BusPlan extends Component {
         this.driving = new AMap.Transfer({
             map: this.map,
             city: '南京市',
-            // panel: 'panel',
+            panel: 'panel',
             policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
         });
     }
@@ -113,6 +113,9 @@ class BusPlan extends Component {
         return (
             <React.Fragment>
                 <div id = "amap" style={{width: "100%", height: "100%"}}></div>
+                <div style={{position: "absolute", left: "0", top: "0", overflow: "auto", height: "600px"}}>
+                    <div id = "panel" style={{width: "300px"}}/>
+                </div>
                 <div onClick={switchMapLayer} style={{...this.switchTypeStyle, backgroundImage: `url(${mapimg})`, right: "70px"}}>
                     <p style={this.textStyle}>地图</p>
                 </div>

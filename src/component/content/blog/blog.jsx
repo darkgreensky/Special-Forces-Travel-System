@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BlogCard from './blogCard';
 import $ from 'jquery';
 import {Link} from "react-router-dom";
+import { URL } from '../../../constants';
 
 const cardBoxStyle = {
     display: "flex",
@@ -25,7 +26,7 @@ class Blog extends Component {
 
     componentDidMount() {
         $.ajax({
-            url: 'http://192.168.255.236:8080/ticket/all',
+            url: `${URL}/ticket/all`,
             type: 'GET',
             dataType: 'json',
             success: (responseData) => {

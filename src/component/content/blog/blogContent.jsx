@@ -31,9 +31,14 @@ const BlogContent = () => {
                 borderRadius: "5px",
             }}>
                 <hr />
-                <Link to={`/blog`}>
-                    <div>返回</div>
-                </Link>
+                <div style={{width: "100%", textAlign: "center"}}>
+                    <Link to={`/blog`} style={{display: "inline-block", backgroundColor: "#00B5E5", color: "white",
+                        width: "100px", borderRadius: "4px", height: "40px", lineHeight: "40px", marginBottom: "10px",
+                        textDecoration: "none"
+                    }}>
+                        <div>返回上一页</div>
+                    </Link>
+                </div>
             </div>
         </React.Fragment>
     );
