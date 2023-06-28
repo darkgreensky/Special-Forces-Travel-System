@@ -25,3 +25,8 @@
     min-height: 200px;
     overflow: hidden;
 }
+
+.markdown-body img {
+    /*width: 100%;*/
+    max-width: 100%;
+}

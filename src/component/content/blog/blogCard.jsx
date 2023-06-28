@@ -14,7 +14,7 @@ class BlogCard extends Component {
         return (
             <React.Fragment>
                 <div className="container text-center" style={{
-                    backgroundColor: `${this.props.card.id % 2 === 0 ? "#d1e2f8" : "#fcf8f8"}`,
+                    backgroundColor: `${this.props.index % 2 === 0 ? "#d1e2f8" : "#fcf8f8"}`,
                     height: "50px",
                 }}>
                     <div className="row">
@@ -25,7 +25,7 @@ class BlogCard extends Component {
                             {this.props.card.author}
                         </div>
                         <div className="col-2 blog-card-line">
-                            {this.props.card.time}
+                            {this.props.card.time.substring(0, 10)}
                         </div>
                         <div className="col-2 blog-card-line">
                             {this.props.card.quantity}

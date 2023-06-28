@@ -3,6 +3,8 @@ import backgroundImage from '../../../images/nanjing_yangtze_river_bridge_day.pn
 import '../../../styles/register.css';
 import $ from 'jquery';
 import { URL } from '../../../constants';
+import ACTIONS from '../../../redux/actions';
+import { connect } from 'react-redux';
 
 class Register extends Component {
     constructor(props) {
@@ -11,6 +13,7 @@ class Register extends Component {
             error_message: "",
             username: "",
             password: "",
+            is_login: true,
             // password_confirm: "",
         };
     }
@@ -40,14 +43,30 @@ class Register extends Component {
                 dataType: "json",
                 success: resp => {
                     if (resp.result === "success")
+                    {
+                        console.log("register success");
+                        this.handleLogin();
                         window.location.href="/";
+                    }
                     else
+                    {
                         console.log(resp);
                         this.setState({error_message: resp.result});
+                    }
                 }
             })
         }
     }
+
+    // 登录逻辑
+    handleLogin = () => {
+        this.setState({
+            is_login: true
+        });
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', this.state.username);
+        this.props.login_token(this.state);
+    };
 
     render() {
         return (
@@ -67,4 +86,15 @@ class Register extends Component {
     }
 }
 
-export default Register;
+const mapDispatchProps = {
+    login_token: state => {
+        console.log("login");
+        return {
+            type: ACTIONS.LOGIN_TOKEN,
+            is_login: state.is_login,
+            username: state.username,
+        }
+    }
+}
+
+export default connect(null, mapDispatchProps)(Register);

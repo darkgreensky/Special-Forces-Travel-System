@@ -18,6 +18,7 @@ import AllPosition from './content/pages/allPosition';
 import { connect } from 'react-redux';
 import ACTIONS from "../redux/actions";
 import Measure from "./content/map/measure";
+import ManageArticle from "./content/mySpace/manageArticle";
 
 class App extends Component {
     constructor(props) {
@@ -31,6 +32,10 @@ class App extends Component {
             let username = localStorage.getItem('username');
             this.state.is_login = true;
             this.state.username = username;
+            this.props.login_token(this.state);
+        }
+        else {
+            this.state.is_login = false;
             this.props.login_token(this.state);
         }
     }
@@ -60,6 +65,7 @@ class App extends Component {
                                 <Route path='/blog/content/:pageNumber' element={<BlogContent /> } />
                                 <Route path='/login' element={<Login />} />
                                 <Route path='/register' element={<Register />} />
+                                <Route path='/manage/article' element={<ManageArticle />} />
                                 <Route path='/404' element={<NotFound />} />
                                 <Route path='/*' element={<Navigate replace to="/404" />} />
                                 <Route path='/topic' element={<AllPosition />} />

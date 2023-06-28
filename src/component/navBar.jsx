@@ -15,14 +15,22 @@ class NavBar extends Component {
         if (this.props.is_login === true) {
             return (
                 <React.Fragment>
-                    <li className="nav-item">
+                    {/*<ul className="nav-item">*/}
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a className="nav-link" style={{cursor: "pointer"}}>{this.props.username}</a>
-                    </li>
-                    <li className="nav-item">
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a onClick={this.handleLogout} className="nav-link" style={{cursor: "pointer"}}>退出</a>
-                    </li>
+                        <li className="nav-item dropdown">
+                            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                            <a className="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false" style={{marginRight: "5em"}}>
+                                {this.props.username}
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li>
+                                    <Link className="dropdown-item" to="/manage/article">内容管理</Link>
+                                </li>
+                                <li><Link className="dropdown-item" onClick={this.handleLogout} style={{cursor: "pointer"}} to={""}>退出</Link></li>
+                            </ul>
+                        </li>
+                    {/*</ul>*/}
                 </React.Fragment>
             )
         }

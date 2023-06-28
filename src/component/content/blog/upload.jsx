@@ -6,6 +6,7 @@ import rehypeRaw from 'rehype-raw'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { URL } from '../../../constants';
+import axios from "axios";
 
 const Upload = (props) => {
     const [isPreviewMode, setIsPreviewMode] = useState(false);
@@ -113,7 +114,7 @@ const Upload = (props) => {
             .then(response => response.json())
             .then(data => {
                 // 处理上传成功后的响应
-                console.log('上传成功:', data);
+                // console.log('上传成功:', data);
                 // setImageUrl(data.image_url);
                 addImage(data.image_url);
             })
@@ -125,9 +126,36 @@ const Upload = (props) => {
     };
 
     const submit = () => {
-        console.log(titleValue);
-        console.log(inputValue);
-        console.log(props.username);
+        // console.log(titleValue);
+        // console.log(inputValue);
+        // console.log(props.username);
+        let data = new FormData();
+        data.append('title', titleValue);
+        data.append('content', inputValue);
+        data.append('author', props.username);
+        axios.post(`${URL}/guide/create`, data)
+            .then(response => {
+                // console.log(response);
+                window.location.href = "/blog";
+            })
+            .catch(error => {
+                // 处理请求错误
+                console.log(error);
+            });
+        console.log("fetch");
+        // fetch(`${URL}/guide/create`, {
+        //     method: 'POST',
+        //     body: data,
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 处理返回的数据
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         // 处理请求错误
+        //         console.log(error);
+        //     });
     }
 
     return (
@@ -149,7 +177,7 @@ const Upload = (props) => {
                     <button type="button" className="btn btn-light" onClick={addBold} title={"加粗"}>B</button>
                     <button type="button" className="btn btn-light" onClick={addItalic}
                             style={{fontFamily: "monospace", fontStyle: "italic"}} title={"斜体"}>I</button>
-                    <button type="button" className="btn btn-light" onClick={addImage} title={"插入图片链接"}><i className="bi bi-image"></i></button>
+                    <button type="button" className="btn btn-light" onClick={addImage} title={"插入图片链接"}><i className="bi bi-image"/></button>
                     <button type="button" className="btn btn-light" onClick={uploadImage} title={"上传图片"}><i className="bi bi-cloud-arrow-up" />
                     </button>
                     <input type="file" name={"image"} placeholder="" ref={fileInputRef} style={{display: "none"}} onChange={handleFileInputChange}/>
@@ -199,7 +227,7 @@ const Upload = (props) => {
                             className="editable-textarea"
                             onChange={handleInputChange}
                             value={inputValue}
-                        ></textarea>
+                            />
                     </div>
                 </div>
             )}

@@ -15,25 +15,25 @@ class Blog extends Component {
         super(props);
         this.state = {
             cards: [
-                {id: 1, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
-                {id: 2, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
-                {id: 3, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
-                {id: 4, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
-                {id: 5, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
+                // {id: 1, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
+                // {id: 2, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
+                // {id: 3, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
+                // {id: 4, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
+                // {id: 5, title: "夫子庙秦淮河", author: "darkgreen", time: "2023/6/26", quantity: 12},
             ]
         };
     }
 
     componentDidMount() {
         $.ajax({
-            url: `${URL}/ticket/all`,
+            url: `${URL}/guide/all`,
             type: 'GET',
             dataType: 'json',
             success: (responseData) => {
                 // 请求成功
-                console.log(responseData.infor);
+                // console.log(responseData);
                 this.setState({
-                    cards: responseData.infor
+                    cards: responseData.guide
                 });
             },
             error: (xhr, status, error) => {
@@ -69,9 +69,10 @@ class Blog extends Component {
                     </div>
                 </div>
                 <div style={cardBoxStyle}>
-                    {this.state.cards.map(card => (
+                    {this.state.cards.map((card, index) => (
                         <BlogCard
                             key={card.id}
+                            index={index}
                             card={card}
                         />
                     ))}

@@ -86,6 +86,7 @@ class Login extends Component {
         );
     }
 }
+
 const mapDispatchProps = {
     login_token: state => {
         console.log("login");
