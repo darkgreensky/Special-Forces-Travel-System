@@ -30,6 +30,7 @@ class App extends Component {
         const storedLoginStatus = localStorage.getItem('isLoggedIn');
         if (storedLoginStatus === 'true') {
             let username = localStorage.getItem('username');
+            // console.log(username);
             if (username === "") {
                 this.state.is_login = false;
                 this.props.login_token(this.state);

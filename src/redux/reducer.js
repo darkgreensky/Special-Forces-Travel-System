@@ -13,7 +13,7 @@ const reducer = (state = {
         case ACTIONS.LOGIN_TOKEN:
             // console.log("action-login");
             return {
-                is_login: true,
+                is_login: action.is_login,
                 username: action.username,
             }
         case ACTIONS.LOGOUT:
