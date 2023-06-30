@@ -47,9 +47,9 @@ class Blog extends Component {
 
         return (
             <React.Fragment>
-                <div style={{width: "100%", position: "relative", height: "70px"}}>
-                <div style={{width: "200px", height: "70px", backgroundColor: "lightblue", right: "70px", position: "absolute", borderRadius: "30px"}}>
-                    <Link to={"/blog/upload"} style={{display: "block", height: "100%", lineHeight: "70px", textAlign: "center", textDecoration: "auto"}}>发帖</Link>
+                <div style={{width: "100%", position: "relative", height: "60px"}}>
+                <div style={{width: "200px", height: "60px", backgroundColor: "lightblue", right: "70px", position: "absolute", borderRadius: "30px"}}>
+                    <Link to={"/blog/upload"} style={{display: "block", height: "100%", lineHeight: "60px", textAlign: "center", textDecoration: "auto"}}>发帖</Link>
                 </div>
                 </div>
                 <div className="container text-center">

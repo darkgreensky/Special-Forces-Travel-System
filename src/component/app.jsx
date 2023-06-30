@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import SideBar from './sideBar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './content/home/home';
 import NotFound from './content/notFound';
@@ -19,6 +18,17 @@ import { connect } from 'react-redux';
 import ACTIONS from "../redux/actions";
 import Measure from "./content/map/measure";
 import ManageArticle from "./content/mySpace/manageArticle";
+import Team from "./content/team/team";
+import CreateTeam from "./content/team/createTeam";
+import MineTeam from "./content/mySpace/mineTeam";
+import TeamInfo from "./content/team/teamInfo";
+import Traffic from "./content/pathPlan/traffic";
+import Weather from "./content/pages/weather";
+import Hotel from "./content/pages/hotel";
+import Search from "./content/map/search";
+import Activity from "./content/activity/activity";
+import ActivityContent from "./content/activity/activityContent";
+import Bill from "./content/mySpace/bill";
 
 class App extends Component {
     constructor(props) {
@@ -63,16 +73,27 @@ class App extends Component {
                                 <Route path='/' element={<Home />} />
                                 <Route path='/pathplan/drive' element={<PathPlan />} />
                                 <Route path='/pathplan/bus' element={<BusPlan />} />
+                                <Route path='/pathplan/traffic' element={<Traffic />} />
                                 <Route path='/map/sign' element={<Sign />} />
                                 <Route path='/map/measure' element={<Measure />} />
+                                <Route path='/map/search' element={<Search />} />
                                 <Route path='/service' element={<Service />} />
-                                <Route path='/service/:pageNumber' element={<TicketInfo />} />
+                                <Route path='/service/:pageNumber' element={<TicketInfo is_login={this.props.is_login} username={this.state.username}/>} />
                                 <Route path='/blog' element={<Blog /> } />
+                                <Route path='/weather' element={<Weather /> } />
+                                <Route path='/hotel' element={<Hotel /> } />
                                 <Route path='/blog/upload' element={this.props.is_login ? <Upload username={this.state.username} /> : <Navigate replace to="/login"/>} />
                                 <Route path='/blog/content/:pageNumber' element={<BlogContent /> } />
                                 <Route path='/login' element={<Login />} />
                                 <Route path='/register' element={<Register />} />
+                                <Route path='/team' element={<Team />} />
+                                <Route path='/team/create' element={this.props.is_login ? <CreateTeam username={this.state.username} /> : <Navigate replace to="/login"/>} />
+                                <Route path='/team/info/:pageNumber' element={this.props.is_login ? <TeamInfo username={this.state.username} /> : <Navigate replace to="/login"/>} />
                                 <Route path='/manage/article' element={<ManageArticle />} />
+                                <Route path='/manage/team' element={<MineTeam />} />
+                                <Route path='/activity' element={<Activity />} />
+                                <Route path='/activity/content/:pageNumber' element={<ActivityContent /> } />
+                                <Route path='/Bill' element={<Bill username={this.state.username} />} />
                                 <Route path='/404' element={<NotFound />} />
                                 <Route path='/*' element={<Navigate replace to="/404" />} />
                                 <Route path='/topic' element={<AllPosition />} />

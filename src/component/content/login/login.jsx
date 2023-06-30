@@ -38,7 +38,7 @@ class Login extends Component {
                 dataType: "json",
                 success: resp => {
                     if (resp.result === "success") {
-                        console.log("login success");
+                        // console.log("login success");
                         this.handleLogin();
                         window.location.href = "/";
                     }
@@ -89,7 +89,7 @@ class Login extends Component {
 
 const mapDispatchProps = {
     login_token: state => {
-        console.log("login");
+        // console.log("login");
         return {
             type: ACTIONS.LOGIN_TOKEN,
             is_login: state.is_login,

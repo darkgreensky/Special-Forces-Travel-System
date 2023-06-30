@@ -25,7 +25,13 @@ class NavBar extends Component {
                             </a>
                             <ul className="dropdown-menu">
                                 <li>
+                                    <Link className="dropdown-item" to="/bill">我的账单</Link>
+                                </li>
+                                <li>
                                     <Link className="dropdown-item" to="/manage/article">内容管理</Link>
+                                </li>
+                                <li>
+                                    <Link className="dropdown-item" to="/manage/team">我的组队</Link>
                                 </li>
                                 <li><Link className="dropdown-item" onClick={this.handleLogout} style={{cursor: "pointer"}} to={""}>退出</Link></li>
                             </ul>
@@ -51,7 +57,7 @@ class NavBar extends Component {
     render() {
         return (
             <React.Fragment>
-                <nav className="navbar navbar-expand-lg bg-body-tertiary">
+                <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{zIndex: "100"}}>
                     <div className="container-fluid" style={{marginRight: "20px"}}>
                         <a className="navbar-brand" href="/">特种兵旅游系统-南京</a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -70,6 +76,8 @@ class NavBar extends Component {
                                     <ul className="dropdown-menu">
                                         <li><Link className="dropdown-item" to="/pathplan/drive">驾车规划</Link></li>
                                         <li><Link className="dropdown-item" to="/pathplan/bus">公交规划</Link></li>
+                                        <li><Link className="dropdown-item" to="/pathplan/traffic">实时交通</Link></li>
+
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">
@@ -81,13 +89,26 @@ class NavBar extends Component {
                                     <ul className="dropdown-menu">
                                         <li><Link className="dropdown-item" to="/map/sign">地图标记</Link></li>
                                         <li><Link className="dropdown-item" to="/map/measure">地图量算</Link></li>
+                                        <li><Link className="dropdown-item" to="/map/search">景点搜索</Link></li>
                                     </ul>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/service">购票服务</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/blog">路线分享</Link>
+                                    <Link className="nav-link" to="/blog">攻略分享</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/team">组团旅行</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/weather">天气预报</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/hotel">附近宾馆</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/activity">近期活动</Link>
                                 </li>
                             </ul>
                             <ul className="navbar-nav">

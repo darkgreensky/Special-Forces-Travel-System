@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ServiceCard from './serviceCard';
 import $ from 'jquery';
 import { URL } from '../../../constants';
+import axios from "axios";
 
 const cardBoxStyle = {
     display: "flex",
@@ -13,12 +14,8 @@ class Service extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cards: [
-                // {id: 1, image: "https://img1.baidu.com/it/u=1088649273,1938606525&fm=253&fmt=auto&app=138&f=JPEG?w=944&h=500", title: "夫子庙秦淮河", content: "这是南京非常繁华的地带之一，这也是众多游客来南京必玩的地方，在这里不仅能看到古都南京的历史建筑，还能吃到最地道的秦淮风味名点小吃，从不同视角感受河畔风土人情。"},
-                // {id: 2, image: "https://img1.baidu.com/it/u=1088649273,1938606525&fm=253&fmt=auto&app=138&f=JPEG?w=944&h=500", title: "夫子庙秦淮河", content: "这是南京非常繁华的地带之一，这也是众多游客来南京必玩的地方，在这里不仅能看到古都南京的历史建筑，还能吃到最地道的秦淮风味名点小吃，从不同视角感受河畔风土人情。"},
-                // {id: 3, image: "https://img1.baidu.com/it/u=1088649273,1938606525&fm=253&fmt=auto&app=138&f=JPEG?w=944&h=500", title: "夫子庙秦淮河", content: "这是南京非常繁华的地带之一，这也是众多游客来南京必玩的地方，在这里不仅能看到古都南京的历史建筑，还能吃到最地道的秦淮风味名点小吃，从不同视角感受河畔风土人情。"},
-                // {id: 4, image: "https://img1.baidu.com/it/u=1088649273,1938606525&fm=253&fmt=auto&app=138&f=JPEG?w=944&h=500", title: "夫子庙秦淮河", content: "这是南京非常繁华的地带之一，这也是众多游客来南京必玩的地方，在这里不仅能看到古都南京的历史建筑，还能吃到最地道的秦淮风味名点小吃，从不同视角感受河畔风土人情。"},
-            ]
+            cards: [],
+            content: "",
         };
     }
 
@@ -41,18 +38,51 @@ class Service extends Component {
         });
     }
 
-    render() {
+    search = () => {
+        // console.log(this.state.content);
+        axios.get(`${URL}/ticket/search?text=${this.state.content}`)
+            .then(response => {
+                // console.log(response);
+                this.setState({
+                    cards: response.data.infor,
+                });
+            }).catch(error => {
+                console.log(error);
+        });
+    }
 
+    render() {
         return (
             <React.Fragment>
-                    <div style={cardBoxStyle}>
-                    {this.state.cards.map(card => (
-                        <ServiceCard
-                            key={card.id}
-                            card={card}
-                        />
-                    ))}
+                <div style={{
+                    width: "100%",
+                    textAlign: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "10px",
+                }}>
+                    <div style={{width: "50%"}}>
+                        <div className="input-group mb-3" style={{
+                        }}>
+                            <input type="text" className="form-control" aria-label="Recipient's username" aria-describedby="button-addon2"
+                                   onChange={e => {this.setState({content: e.target.value})}} style={{width: "50%"}} />
+                                <button className="btn btn-outline-secondary" type="button" id="button-addon2"
+                                        onClick={() => this.search()}>搜索
+                                </button>
+                        </div>
                     </div>
+                    {/*<input  />*/}
+                    {/*<button >搜索</button>*/}
+                </div>
+                <div style={cardBoxStyle}>
+                {this.state.cards.map(card => (
+                    <ServiceCard
+                        key={card.id}
+                        card={card}
+                    />
+                ))}
+                </div>
             </React.Fragment>
         );
     }

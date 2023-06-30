@@ -3,15 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { URL } from '../../../constants';
 
-const TicketInfo = () => {
+const TicketInfo = (props) => {
     let params = useParams();
     let pageNumber = params.pageNumber;
 
-    const [infos, setInfos] = useState({
-        // title: "TITLE",
-        // image: "https://imgs.qunarzz.com/sight/p0/201403/04/8215e0824815e9c38e158f6dffb71ebe.jpg_710x360_ec4d4551.jpg",
-        // introduction: "介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍",
-    });
+    const [infos, setInfos] = useState({});
     const [map, setMap] = useState(null);
     const [pos, setPos] = useState([116.406315, 39.908775]);
     const [flag, setFlag] = useState(0);
@@ -69,6 +65,31 @@ const TicketInfo = () => {
         fetchData();
     }, [pageNumber]);
 
+    const purchase = message => {
+        if (props.is_login === false) {
+            window.location.href = "/login";
+            return;
+        }
+        let data = new FormData();
+        data.append('user', props.username);
+        data.append('id', pageNumber);
+        axios.post(`${URL}/ticket/buy`, data)
+        .then(response => {
+            // console.log(response);
+            if (response.data.result === 'success') {
+                alert(`购票成功\n花费了: ${response.data.cost}\n余额: ${response.data.money}`);
+            }
+            else {
+                alert("购票失败,余额不足!");
+            }
+        })
+        .catch(error => {
+            // 处理请求错误
+            alert(error);
+            console.log(error);
+        });
+    }
+
     return (
         <React.Fragment>
             <div className="container" style={{
@@ -93,11 +114,29 @@ const TicketInfo = () => {
                                             <div style={{margin: "10px", fontSize: "50px", color: "#1295AD"}}>
                                                 {infos.title}
                                             </div>
-                                            <div>
+                                            <div style={{
+                                                color: "#84b086",
+                                                fontSize: "large",
+                                                margin: "10px",
+                                            }}>开放日期</div>
+                                            <div style={{
+                                                margin: "10px",
+                                            }}>
+                                                <div>
+                                                    {infos.open_time.split("；")[0]}
+                                                </div>
+                                                <div>
+                                                    {infos.open_time.split("；")[1]}
+                                                </div>
+                                                <div>
+                                                    {infos.open_time.split("；")[2]}
+                                                </div>
+                                            </div>
+                                            <div style={{margin: "10px", fontSize: "20px", color: "#e8498a"}}>
                                                 票价:
                                                 {infos.price}
                                             </div>
-                                            <button onClick={() => {alert("购买成功")}}>购买</button>
+                                            <button type="button" className="btn btn-danger" onClick={purchase} style={{margin: "10px"}}>购买</button>
                                         </div>
                                     </div>
                                     <hr />
@@ -112,9 +151,6 @@ const TicketInfo = () => {
                                     <hr/>
                                     <div id={"ticketInfo-introduce"}>
                                         {infos.introduction}
-                                    </div>
-                                    <div>
-                                        {infos.open_time}
                                     </div>
                                     <hr/>
                                     <div id={"ticketInfo-map"} style={{width: "100%", textAlign: "center", fontSize: "30px"}}>

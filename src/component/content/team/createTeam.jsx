@@ -8,10 +8,11 @@ import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { URL } from '../../../constants';
 import axios from "axios";
 
-const Upload = (props) => {
+const CreateTeam = (props) => {
     const [isPreviewMode, setIsPreviewMode] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [titleValue, setTitleValue] = useState('');
+    const [timeValue, setTimeValue] = useState('');
     // const [imageUrl, setImageUrl] = useState('');
     const textareaRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -30,6 +31,10 @@ const Upload = (props) => {
 
     const handleTitleChange = (event) => {
         setTitleValue(event.target.value);
+    };
+
+    const handleTimeChange = (event) => {
+        setTimeValue(event.target.value);
     };
 
     const addBold = () => {
@@ -126,47 +131,39 @@ const Upload = (props) => {
     };
 
     const submit = () => {
-        // console.log(titleValue);
-        // console.log(inputValue);
-        // console.log(props.username);
         let data = new FormData();
         data.append('title', titleValue);
-        data.append('content', inputValue);
-        data.append('author', props.username);
-        axios.post(`${URL}/guide/create`, data)
+        data.append('introduction', inputValue);
+        data.append('leader', props.username);
+        data.append('end_time', timeValue);
+        // console.log(data);
+        axios.post(`${URL}/team/create`, data)
             .then(response => {
                 // console.log(response);
-                window.location.href = "/blog";
+                window.location.href = "/team";
             })
             .catch(error => {
                 // 处理请求错误
                 console.log(error);
             });
-        // console.log("fetch");
-        // fetch(`${URL}/guide/create`, {
-        //     method: 'POST',
-        //     body: data,
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // 处理返回的数据
-        //         console.log(data);
-        //     })
-        //     .catch(error => {
-        //         // 处理请求错误
-        //         console.log(error);
-        //     });
     }
 
     return (
         <div className={"container"} style={{marginTop: "30px"}}>
             <div className={"input-group"} style={{position: "relative", margin: "10px"}}>
+                <span className="input-group-text">路线名称</span>
                 <input type="text" className="form-control"
                        aria-label="Dollar amount (with dot and two decimal places)"
-                        value={titleValue}
+                       value={titleValue}
                        onChange={handleTitleChange}
                 />
-                <span className="input-group-text">标题</span>
+                <span className="input-group-text">旅行时间</span>
+                <input type="text" className="form-control"
+                       aria-label="Dollar amount (with dot and two decimal places)"
+                       value={timeValue}
+                       onChange={handleTimeChange}
+                       placeholder={"YYYY/MM/DD"}
+                />
             </div>
             <div style={{position: "relative", marginBottom: "1px"}}>
                 <div className="btn-group" role="group" aria-label="Basic example">
@@ -227,13 +224,13 @@ const Upload = (props) => {
                             className="editable-textarea"
                             onChange={handleInputChange}
                             value={inputValue}
-                            />
+                        />
                     </div>
                 </div>
             )}
-            <button type="button" className="btn btn-success" onClick={submit}>提交</button>
+            <button type="button" className="btn btn-success" onClick={submit}>发起组队</button>
         </div>
     );
 };
 
-export default Upload;
+export default CreateTeam;

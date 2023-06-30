@@ -44,14 +44,14 @@ class Register extends Component {
                 success: resp => {
                     if (resp.result === "success")
                     {
-                        console.log("register success");
+                        // console.log("register success");
                         this.handleLogin();
                         window.location.href="/";
                     }
                     else
                     {
                         console.log(resp);
-                        this.setState({error_message: resp.result});
+                        this.setState({error_message: resp.status_msg});
                     }
                 }
             })
@@ -88,7 +88,7 @@ class Register extends Component {
 
 const mapDispatchProps = {
     login_token: state => {
-        console.log("login");
+        // console.log("login");
         return {
             type: ACTIONS.LOGIN_TOKEN,
             is_login: state.is_login,

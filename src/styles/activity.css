@@ -1,0 +1,12 @@
+.activity-sort-button {
+    user-select: none;
+    display: inline-block;
+    padding: 0 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.activity-sort-active {
+    background-color: #F47108;
+    color: white;
+}
