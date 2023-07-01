@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import {URL} from "../../../constants";
-import BlogCard from "../blog/blogCard";
-import {Link} from "react-router-dom";
 
 class Bill extends Component {
     constructor(props) {

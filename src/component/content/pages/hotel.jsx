@@ -11,21 +11,9 @@ class Hotel extends Component {
             overlays: null,
             lng: 118.796877,
             lat: 32.060255,
-            infos: [
-                {
-                    name: "name",
-                    key: 1,
-                    address: "addressaddressaddressaddressaddressaddress",
-                    photos: []
-                },
-                {
-                    name: "name",
-                    key: 2,
-                    address: "addressaddressaddressaddressaddressaddress",
-                    photos: []
-                }
-            ],
+            infos: [],
             flag: false,
+            marker: [],
         };
     }
 
@@ -61,6 +49,7 @@ class Hotel extends Component {
     searchHotel = (lng, lat) => {
         let AMap = window.AMap;
         let map = this.state.map;
+        map.clearMap();
         AMap.plugin(["AMap.PlaceSearch"], () => {
             //构造地点查询类
             let placeSearch = new AMap.PlaceSearch({
@@ -76,6 +65,7 @@ class Hotel extends Component {
             });
             let cpoint = [lng, lat]; //中心点坐标
             placeSearch.searchNearBy('宾馆', cpoint, 1500, (status, result) => {
+                // console.log(result);
                 // console.log(result.hasOwnProperty('poiList'));
                 if (result.hasOwnProperty('poiList')) {
                     let res = result.poiList.pois;
@@ -90,7 +80,8 @@ class Hotel extends Component {
                     let pois = result.poiList.pois;
                     for (let i = 0; i < pois.length; i++) {
                         let poi = pois[i];
-                        let marker = [];
+                        let marker = this.state.marker;
+                        marker = [];
                         marker[i] = new AMap.Marker({
                             // icon: `//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-${i}.png`,
                             position: poi.location,   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
@@ -99,7 +90,7 @@ class Hotel extends Component {
                         // 将创建的点标记添加到已有的地图实例：
                         map.add(marker[i]);
                         map.setFitView();
-                        this.setState({infos: updatedRes, flag: true});
+                        this.setState({infos: updatedRes, flag: true, marker: marker});
                     }
                 }
                 else {
@@ -163,10 +154,16 @@ class Hotel extends Component {
                                                     height: "56px",
                                                     float: "right",
                                                 }}>
-                                                    <img style={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                    }} src={`${info.photos[0].url}`} alt={""} />
+                                                    {info.photos && info.photos.length > 0 && (
+                                                        <img
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                            }}
+                                                            src={info.photos[0].url}
+                                                            alt=""
+                                                        />
+                                                    )}
                                                 </div>
                                                 <div className={"poi-title"}>
                                                     {info.name}
